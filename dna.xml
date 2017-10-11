@@ -1,0 +1,8 @@
+<Module>
+<ModulePrefs title=”Custom Gadget“/>
+<Content type=”html“>
+<![CDATA[
+<script src="https://raw.githubusercontent.com/vricci/funny_projects/master/dna.js"</script>
+]]>
+</Content>
+</Module>
