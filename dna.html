@@ -1,83 +1,120 @@
-<!DOCTYPE html>
-<title>Test</title></head>
-<script> 
-function toBinary(string){
-    var s = string;
-    var char1, char2, char3, char4;
-    var out ='';
-    var res = '';
-    var code = 0;
-    var bin = 0;
-    for(var i=0; i<s.length; i++) {
-        code = s.charCodeAt(i);
-        bin =code.toString(2);
-
-        switch(bin.length)  { 
-            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-                // 0xxxxxxx
-                while(bin.length<=7) bin = '0' + bin;
-                res = bin;
-                break;
-            case 8: case 9: case 10: case 11:
-                char2 = '10'+bin.slice(-6);
-                char1 = bin.slice(0, bin.length-6);
-                while(char1.length<5) char1 = '0' + char1;
-                char1 = '110'+char1;
-                res = char1 + char2;
-                break;
-            case 12: case 13: case 14: case 15: case 16:
-                char3 = '10'+bin.slice(-6);
-                char2 = '10'+bin.slice(-12,-6);
-                char1 = bin.slice(0, bin.length-12);
-                while(char1.length<4) char1 = '0' + char1;
-                char1 = '1110'+char1;
-                res= char1+char2+char3
-                break;
-            case 17: case 18: case 19: case 20: case 21:
-                char4 = '10'+bin.slice(-6);
-                char3 = '10'+bin.slice(-12,-6);
-                char2 = '10'+bin.slice(-18,-12);
-                char1 = bin.slice(0, bin.length-18);
-                while(char1.length<3) char1 = '0' + char1;
-                char1 = '11110'+char1;
-                res=char1+char2+char3+char4;
-                break;
-                   }
-        out= out+res;
-                }
-    return out;
-}
-function toDNA(string){
-    var out, bin, slice;
-    out=''
-    bin = toBinary(string);
-    for(var i=0; i<bin.length; i=i+2) {
-        switch(bin.slice(i,i+2))  { 
-            case '00':
-                out=out+'A';
-                break;
-            case '01':
-                out=out+'C';
-                break;
-            case '10':
-                out=out+'G';
-                break;
-            case '11':
-                out=out+'T';
-                break;
-        }
-        
-        //break;
-        }
-        document.getElementById("answer").innerHTML=out;
-    }
-</script>
-
-<form xmlns="http://www.w3.org/1999/xhtml" action="" id="nothing">
-  <textarea id="pippo" type="text" /></textarea
-  <input id="value1" type="text" />
-  <input id="but" onclick="toDNA(document.getElementById('pippo').value)" type="button" value="Converti" />
-</form>
-
-<p id="answer"></p>
 <html>
+	<head>
+		<title>DNA Encoder</title>
+		<style>
+			html, body {
+				width: 95%;
+				margin: 5;
+			}
+			#note{
+				font-size: smaller;
+			}
+			#input {
+				width: 100%;
+				height: 10%;
+			}
+			#container {
+				border-style: double;
+			}
+			#answer {
+				padding :10;
+				word-wrap: break-word;
+			}
+		</style>
+	</head>
+	<body>
+<h2>Uno stupidissimo convertore di caratteri in sequenze di DNA</h2>
+<p style="text-align: justify;">L'idea nasce da <a href="https://pasticciodiopinioni.wordpress.com/?p=470&preview=true">qui</a>, e questa sottospecie di convertitore è stato un pretesto per provare a fare qualcosa in Javascript.</p>
+<p style="text-align: left;">Il codice è sul mio <a href="https://github.com/vricci/funny_projects">github</a>.</p>
+<p id="note" style="text-align: justify;">Essendo una schiappa svogliata non ho avuto voglia di implementare in JS il convertitore al contrario. Se per qualche strano scherzo del destino qualcuno ne avesse davvero bisogno(?), sempre lì c'è uno script in python che fa entrambe le cose.</p>
+
+ 
+
+<form xmlns="http://www.w3.org/1999/xhtml" action="" id="form">
+  <textarea id="input" type="text" /></textarea
+  <input id="value1" type="text" />
+  <input id="button" onclick="convertToDNA('input','answer')" type="button" value="Converti" />
+</form>
+<p style="text-align: justify;">DNA sequence:</p>
+<div id="container">
+<p id="answer"></p>
+</div>
+
+
+</body>
+<html>
+<script>
+function textToBinary(string){
+	var bin, char1, char2, char3, char4;
+	var out ='';
+	var res = '';
+	for(var i=0; i<string.length; i++) {
+		// Character to binary code
+		bin =string.charCodeAt(i).toString(2);
+		// Because utf-8 is a variable length encoding (1 to 4 bytes), you need to split the binary value according to the case
+		switch(bin.length)  {
+			case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+				// 0xxxxxxx
+				while(bin.length<=7) bin = '0' + bin;
+				res = bin;
+				break;
+			case 8: case 9: case 10: case 11:
+				// 110xxxxx 10xxxxxx    
+				char2 = '10'+bin.slice(-6);
+				char1 = bin.slice(0, bin.length-6);
+				while(char1.length<5) char1 = '0' + char1;
+				char1 = '110'+char1;
+				res = char1 + char2;
+				break;
+			case 12: case 13: case 14: case 15: case 16:
+				// 1110xxxx 10xxxxxx 10xxxxxx
+				char3 = '10'+bin.slice(-6);
+				char2 = '10'+bin.slice(-12,-6);
+				char1 = bin.slice(0, bin.length-12);
+				while(char1.length<4) char1 = '0' + char1;
+				char1 = '1110'+char1;
+				res= char1+char2+char3
+				break;
+			case 17: case 18: case 19: case 20: case 21:
+				// 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+				char4 = '10'+bin.slice(-6);
+				char3 = '10'+bin.slice(-12,-6);
+				char2 = '10'+bin.slice(-18,-12);
+				char1 = bin.slice(0, bin.length-18);
+				while(char1.length<3) char1 = '0' + char1;
+				char1 = '11110'+char1;
+				res=char1+char2+char3+char4;
+				break;
+		}
+		out= out+res;
+	}
+	return out;
+}
+function textToDNA(string){
+	var out, bin, slice;
+	out=''
+	bin = textToBinary(string);
+	for(var i=0; i<bin.length; i=i+2) {
+		switch(bin.slice(i,i+2))  { 
+			case '00':
+				out=out+'A';
+				break;
+			case '01':
+				out=out+'C';
+				break;
+			case '10':
+				out=out+'G';
+				break;
+			case '11':
+				out=out+'T';
+				break;
+		}
+	}
+	return out;
+}
+function convertToDNA (source, dest){
+	var sdata = document.getElementById(source).value;
+	var out = textToDNA(sdata);
+	document.getElementById(dest).innerHTML=out;
+}
+ </script> 
