@@ -1,0 +1,407 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Big Numbers</title>
+<!-- CSS Styling-->
+		<style type="text/css">
+			body {
+				width: 80%;
+				height:100%;
+				margin: 0px auto;
+				}
+			div#header {
+				overflow: hidden;
+				position: fixed;
+				top: 0;
+				height: 80px;
+				width: inherit;
+				z-index:4;
+				box-shadow: 0 5px 10px -5px #333;
+				}
+			ul#topbar {
+				display: block;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				background-color: #333;
+				height: 80px;
+				}
+			li.menuitem {
+				float: left;
+				height: 80px;
+				}
+			li.menuitemright {
+				float: right;
+				height: 80px;
+				line-height: 80px;
+				display: inline;
+				}
+			li.spacer {
+				float: right;
+				height: 80px;
+				width: 10px;
+				display: inline;
+				}
+			#title{
+				font-size: x-large;
+				display: block;
+				color:white;
+				text-align: center;
+				padding: 0px 16px;
+				height: inherit;
+				}
+			img.flag {
+				border: 3px double rgba(255, 255, 255, 0.3);
+				vertical-align: middle;
+				}
+			#main {
+				position: relative;
+				width:100%;
+				z-index:3;
+				top: 80px;
+				margin-bottom:110px;
+				background-color: #f2f2f2;
+				}
+			#sbody {
+				padding:25;
+				}
+			#listing {
+				text-align: center;
+				}
+			#listing p {
+				display:inline;
+				font-family: "Lucida Console", Monaco, monospace;
+				}
+			.counter {
+				font-size: x-large;	
+				}
+			#infobody {
+				display: none;
+				padding:25;
+				text-align: justify;
+				}
+			div#footer{
+				overflow: hidden;
+				position: fixed;
+				bottom: 0px;
+				height: 30px;
+				width: inherit;
+				z-index: 4;
+				font-size: smaller;
+				background-color: #333;
+				}
+			ul#bottombar {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				height: 80px;
+				background-color: #333;
+				}
+			#note{
+				padding:0 10;
+				color: white;
+				font-size: small;
+				}
+			#info{
+				float: right;
+				padding: 0 16px;
+				}
+			#info:hover {
+				background-color: #111;
+				}
+		</style>
+	</head>
+	<body>
+		<div id=header>
+			<ul id="topbar">
+				<li class="menuitem">
+					<p id="title">
+						<span lang="it">Grandi numeri</span>
+						<span lang="en">Large numbers</span>
+						<span lang="ja">巨大数</span>			
+					</p>
+				</li>
+				<li class="spacer"></li>
+				<li class="menuitemright">
+					<img class="flag" lang="it" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/23px-Flag_of_Italy.svg.png">
+					<img class="flag" lang="en" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/23px-Flag_of_the_United_States.svg.png">
+					<img class="flag" lang="ja" src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/23px-Flag_of_Japan.svg.png">
+				</li>
+				<li class="spacer"></li>
+				<li class="menuitemright">
+					<select id="lang-switch"> <!-- Lang selector-->
+						<option value="it">Italiano</option>
+						<option value="en">English</option>
+						<option value="ja">日本語</option>
+					</select>
+				</li>
+			</ul>
+		</div>
+		<div id="main">
+			<div id="sbody">
+					
+				<p lang="it" style="text-align: justify;">Quando i numeri sono troppo grandi è difficile rendersi conto di quanto sono grandi davvero. <a href="https://www.xkcd.com/980/">xkcd</a> ci prova con la geometria, io ci ho provato col tempo.</p>
+				<p lang="en" style="text-align: justify;">When numbers are too big is difficult to realize how big they really are.<a href="https://www.xkcd.com/980/">xkcd</a> tried with geometry, I tried with time.</p>
+				<p lang="ja" style="text-align: justify;">数字が大きいすぎるとそのスケールを理解できるのは難しくなる。把握するために<a href="https://www.xkcd.com/980/">xkcd</a>が幾何学を使用したが、私は時間を使ってみました。</p>
+				
+				<br>
+				<p lang="it">Da quando hai aperto questa pagina:</p>
+				<p lang="en">Since you opened this page:</p>
+				<p lang="ja">このページを開いてから…</p>
+
+				<div id="listing">
+					<p lang="it">nel mondo sono state vendute</p> <!-- BIC pens -->
+					<p lang="en">all over the world</p>
+					<p lang="ja">BICボールペン</p>
+					<p class="counter" id="Bic"></p>
+					<p lang="it">penne BIC,</p>
+					<p lang="en">BIC pens have been sold,</p>
+					<p lang="ja">本が売がられた。</p>
+					<br>
+					<p lang="it">gli USA hanno speso</p> <!-- Usa military expenses -->
+					<p lang="en">USA spent</p>
+					<p lang="ja">アメリカは軍事費に</p>
+					<p class="counter" id="MilUsa"></p>
+					<p lang="it">$ per l'esercito,</p>
+					<p lang="en">$ for the military,</p>
+					<p lang="ja">＄を使った。</p>
+					<br>
+					<p lang="it">il Giappone ha speso</p> <!-- Japan military expenses -->
+					<p lang="en">Japan spent</p>
+					<p lang="ja">日本は軍事費に</p>
+					<p class="counter" id="MilJap"></p>
+					<p lang="it">$ per l'esercito,</p>
+					<p lang="en">$ for the military,</p>
+					<p lang="ja">＄を使った。</p>
+					<br>
+					<p lang="it">l'Italia ha speso</p> <!-- Italian military expenses -->
+					<p lang="en">Italy spent</p>
+					<p lang="ja">イタリアは軍事費に</p>
+					<p class="counter" id="MilIta"></p>
+					<p lang="it">$ per l'esercito,</p>
+					<p lang="en">$ for the military,</p>
+					<p lang="ja">＄を使った。</p>
+					<br>
+					<p lang="it">nel mondo sono nati</p> <!-- Births -->
+					<p lang="en">in the world</p>
+					<p lang="ja">地球に</p>
+					<p class="counter" id="Birth"></p>
+					<p lang="it">bambini,</p>
+					<p lang="en">babies were born,</p>
+					<p lang="ja">人の子どもが生まれた。</p>
+					<br>
+					<p lang="it">su YouTube sono state caricate</p> <!-- Youtube hours of contents uploaded -->
+					<p lang="en">on YouTube</p>
+					<p lang="ja">YouTubeに</p>
+					<p class="counter" id="YT"></p>
+					<p lang="it"> ore di video,</p>
+					<p lang="en"> hours of contents have been uploaded,</p>
+					<p lang="ja">時間の動画をアップロードされた。</p>
+					<br>
+					<p lang="it">nel mondo sono state fumate</p> <!-- Cigarettes smoked -->
+					<p lang="en">smokers in the world smoked</p>
+					<p lang="ja">世界中の喫煙者は</p>
+					<p class="counter" id="Cigs"></p>
+					<p lang="it"> sigarette,</p>
+					<p lang="en"> cigarettes,</p>
+					<p lang="ja"> 本のタバコを吸って、</p>
+					<br>
+					<p lang="it">i cui filtri sono diventati</p> <!-- Cigarettes trash -->
+					<p lang="en">whose filters turned into</p>
+					<p lang="ja">その吸い殻は</p>
+					<p class="counter" id="CigsT"></p>
+					<p lang="it">Kg di rifiuti,</p>
+					<p lang="en">Kg of litter,</p>
+					<p lang="ja">Kgのゴミになった。</p>
+					<br>
+					<p lang="it">la stazione spaziale internazionale ha percoso</p> <!-- ISS -->
+					<p lang="en">ISS travelled in space for</p>
+					<p lang="ja">国際宇宙ステーションは</p>
+					<p class="counter" id="ISS"></p>
+					<p lang="it">Km nello spazio,</p>
+					<p lang="en">Km,</p>
+					<p lang="ja">Kmを飛行した。</p>
+					<br>
+					<p lang="it">e voi avete perso</p> <!-- ISS -->
+					<p lang="en">and you spent</p>
+					<p lang="ja">そしてあなたは</p>
+					<p class="counter" id="Sec"></p>
+					<p lang="it">secondi della vostra vita su questa pagina.</p>
+					<p lang="en">seconds of your life on this page.</p>
+					<p lang="ja">秒の人生をこのページに使ってしまった。</p>
+					<br>
+
+				</div>
+			</div>
+			<div id="infobody"> <!-- INFO -->
+					<p lang="it">Lo scopo di tutto ciò, oltre al dare un idea di quantità altrimenti difficili da comprendere, era per me di provare ad usare un po' di css e javascript per avere più lingue in una sola pagina html. </p>
+					<p lang="it">Ho scoperto che non è affatto una buona idea.</p>
+					<p lang="it">Il codice come sempre è sul mio <a href="https://github.com/vricci/funny_projects">github</a>.</p>
+					<p lang="it">Anche se questa pagina non vuole essere accurata al 100% riporto comunque le fonti da cui ho preso i dati:</p>
+					<li lang="it">I dati riguardo a BIC sono presi da <a href="http://www.statisticbrain.com/bic-company-statistics/">qui</a> e per dovere di cronaca aggiungo che in realtà i dati si riferiscono a tutti gli articoli di cancelleria e non solo alle penne</li>
+					<li lang="it">I dati riguardo la spesa militare sono tratti da <a href="https://en.wikipedia.org/wiki/List_of_countries_by_military_expenditures">questa</a> pagina di Wikipedia</li>
+					<li lang="it">Le nascite sono calcolate semplicemente secondo la media stimata riportata <a href="https://en.wikipedia.org/wiki/Birth_rate">qui</a> ma con l'occasione ho trovato <a href="http://worldbirthsanddeaths.com/">un sito</a> veramente fico che riporta nascite e morti per paese e le visualizza su una mappa in simil tempo reale</li>
+					<li lang="it">Le ore di video caricate su Youtube sono prese da <a href="https://en.wikipedia.org/wiki/YouTube">qui</a>.</li>
+					<li lang="it">I dati sulle sigarette vengono da <a href="https://en.wikipedia.org/wiki/Cigarette#Environmental_impact">qui</a>.</li>
+					<li lang="it">La velocità della stazione spaziale è tratta da <a href="https://en.wikipedia.org/wiki/International_Space_Station">qui</a>.</li>
+
+					<p lang="en">The aim of this page, in addition to grasping the meaning of very large numbers, was for me to try some css and javascript to have multiple language on the same html page.</p>
+					<p lang="en">I found out that this is not a good idea at all.</p>
+					<p lang="en">Source code, as always on my <a href="https://github.com/vricci/funny_projects">github</a>.</p>
+					<p lang="en">The aim of the page is not to be 100% accurate, however under here you can find the sources I used:</p>
+					<li lang="en">Data regarding BIC are taken from <a href="http://www.statisticbrain.com/bic-company-statistics/">here</a>. For completeness I have to say that they actually refer to all stationary goods and not just pens.</li>
+					<li lang="en">Data regarding military expenditures are taken from <a href="https://en.wikipedia.org/wiki/List_of_countries_by_military_expenditures">this </a> Wikipedia page</li>
+					<li lang="en">Birth rate is computed based on the average proposed in <a href="https://en.wikipedia.org/wiki/Birth_rate">this page</a> but searching about birth rates I also found <a href="http://worldbirthsanddeaths.com/">this</a> super cool site that shows various info on birth rates and death rates, by counrty and shows them on a map in a realtime like fashion.</li>
+					<li lang="en">Hours of contents uploaded to YouTube are taken from <a href="https://en.wikipedia.org/wiki/YouTube">here</a>.</li>
+					<li lang="en">Data about cigarettes are taken from <a href="https://en.wikipedia.org/wiki/Cigarette#Environmental_impact">here</a>.</li>
+					<li lang="it">ISS speed is taken from <a href="https://en.wikipedia.org/wiki/International_Space_Station">here</a>.</li>
+
+					<p lang="ja">このページの目的は、大きな数字を把握する以外も、cssとjavascriptを使って一つのhtmlページに複数の言語を表示する、個人的な練習でした。</p>
+					<p lang="ja">全然駄目だということが分かった。勉強になりました。</p>
+					<p lang="ja">ページのソースコードは相変わらず私の<a href="https://github.com/vricci/funny_projects">github</a>にある。</p>
+					<p lang="ja">もともとデータの確実性を目的ではないが、引用したところは以下の通りです。</p>
+					<li lang="ja">BICの売上データは<a href="http://www.statisticbrain.com/bic-company-statistics/">ここ</a>から引用され、実はペンだけではなく、文房具全体の数に当たる。＿|￣|○ ｺﾞﾒﾝ</li>
+					<li lang="ja">軍事費のデータは<a href="https://en.wikipedia.org/wiki/List_of_countries_by_military_expenditures">この</a>wikipediaのページからです。</li>
+					<li lang="ja">出生は<a href="https://en.wikipedia.org/wiki/Birth_rate">このページ</a>にある率から計算されているが、ついでに<a href="http://worldbirthsanddeaths.com/">このサイト</a>を見つけました。国別の出生と死亡が載っているし、リアルタイム的な形で表示されている格好いいサイトです。</li>
+					<li lang="ja">Youtubeのデータは<a href="https://en.wikipedia.org/wiki/YouTube">ここ</a>から引用する。</li>
+					<li lang="ja">タバコとゴミのデータは<a href="https://en.wikipedia.org/wiki/Cigarette#Environmental_impact">ここ</a>から。</li>
+					<li lang="ja">国際宇宙ステーションもまた<a href="https://en.wikipedia.org/wiki/International_Space_Station">wikipedia</a>からです。</li>
+			</div>
+		</div>
+		<div id="footer"> <!-- footer -->
+				<ul id="bottombar">
+					<li id="info">
+						<p id="note" lang="it">Info</p>
+						<p id="note" lang="en">Info</p>
+						<p id="note" lang="ja">Info</p>
+					</li>
+				</ul>
+			</div>
+
+	</body>
+
+
+
+
+
+
+
+
+
+<script>
+$('#info').click(function() {
+		if (document.getElementById("sbody").style.display =='none'){
+			$('[id="infobody"]').hide();
+			$('[id="sbody"]').show();
+		}else{
+		$('[id="sbody"]').hide();
+		$('[id="infobody"]').show();
+	}
+	});
+</script>
+<script>
+
+
+languages=['en','it','ja']
+cur_lan=navigator.language.slice(0, 2)
+cur_lan='it'
+
+//Change language
+function setDefault() {
+	for (i in languages) {
+		// Hide all languages except locale
+		if (languages[i]!=cur_lan){
+			$('[lang="'+languages[i]+'"]').hide();
+		}else{
+		// Locale is set as default in select menu
+			var select = document.getElementById("lang-switch");
+			select.value = languages[i];
+		}
+		
+	}
+	var select = document.getElementById("lang-switch");
+}
+setDefault()
+
+$('#lang-switch').change(function () {
+	var lang = $(this).val();
+	switch (lang) {
+	case 'en': 
+		$('[lang]').hide();
+		$('[lang="en"]').show();
+		break;
+	case 'it':
+		$('[lang]').hide();
+		$('[lang="it"]').show();
+		break;
+	case 'ja':
+		$('[lang]').hide();
+		$('[lang="ja"]').show();
+		break;
+	default:
+		$('[lang]').hide();
+		$('[lang="it"]').show();
+	}
+});
+
+
+</script>
+<script>
+var values = {
+	"Bic": 		277.58,
+	"MilUsa": 19367.76,
+	"MilJap": 1460.82,
+	"MilIta": 884.1,
+	"Birth": 	4.26,
+	"YT": 		6.66,
+	"Cigs": 	177453.29,
+	"CigsT": 	24.25,
+	"ISS": 		7.67,
+	"Sec": 		1,
+}
+/*for(var key in values) {
+	var val = values[key];
+	alert(val);
+}*/
+/*len=Object.keys(values).length
+alert(len)*/
+var current = [];
+initializeZeroes()
+function initializeZeroes(){
+	var i=0
+	for(var key in values) {
+		current[i]=0
+		document.getElementById(key).innerHTML='0';
+		i++;
+	}
+}
+function formatText(value){
+	var lang = $('#lang-switch').val();
+	switch (lang) {
+	case 'en': 
+		locale = 'en-USA'
+		break;
+	case 'it':
+		locale = 'it-IT'
+		break;
+	case 'ja':
+		locale = 'ja-JP'
+		break;
+	}
+	return Math.round(value).toLocaleString(lang)
+}
+function incrementValues() {
+	i=0
+	for(var v in values) {
+		current[i]= current[i]+values[v]; //value
+		val=formatText(current[i])
+		document.getElementById(v).innerHTML=val;
+		i++
+	}
+	
+}
+
+setInterval(incrementValues, 1000);
+ </script> 
